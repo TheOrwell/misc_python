@@ -1,16 +1,20 @@
 import random
 
-numbers = list(range(10))
-
 
 def cc_gen():
+    numbers = list(range(10))
     array = []
     for i in range(1, 17):
         randNum = random.choice(numbers)
         array.append(randNum)
-    print(array)
+    # print(array)
     return array
 
+
+def randReplace(arr):
+    index_to_replace = random.randint(0, len(arr) - 1)
+    arr[index_to_replace] = '?'
+    return arr
 
 def cc_Check(checkNums):
     digitCount = 0
@@ -29,7 +33,8 @@ def cc_Check(checkNums):
             # If the result of double is equal to or exceeds 10, add the tens and the ones digit together.
             if double >= 10:
                 doubleStr = str(double)  # convert the result of double into a string
-                splitSum = int(doubleStr[0]) + int(doubleStr[1])  # cast each index of that string to an integer and add them
+                splitSum = int(doubleStr[0]) + int(
+                    doubleStr[1])  # cast each index of that string to an integer and add them
                 print(splitSum, end="")
                 digitCount += 1
                 if digitCount % 4 == 0:
@@ -51,51 +56,65 @@ def cc_Check(checkNums):
         index += 1
 
 
-def luhnDoubling(arrNums):
-    # Double the value of every digit.
-    for i in range(len(arrNums)):
-        if arrNums[i] != '?':
-            arrNums[i] *= 2
-
-            # If the result of the doubling is greater than 9, subtract 9 from it
-            if arrNums[i] >= 9:
-                arrNums[i] -= 9
-
 
 def cc_LuhnCheck(checkNums):
+    possible_num = 1
+    arr_sum = 0
 
-    # randomly replace one digit in the array.
-    replaceIdx = random.randint(0, len(checkNums) - 1)
-    checkNums[replaceIdx] = '?'
+    index_ques = checkNums.index('?') + 1     # +1 is here so that every other indices from 0 will be treated as odd.
 
-    luhnDoubling(checkNums)
+    checkNums[index_ques-1] = possible_num    # assign a possible number to the unknown index. -1 here to adjust above indexing.
 
-    print(checkNums.copy())  # Debugging
+    # determine if the array index of ? is odd or even
+    if index_ques % 2 == 1:
+        checkNums[index_ques] *= 2
 
-    possible_int = 1
-    for i in range(9):
-        for j in range(len(checkNums)):
-            if checkNums[j] == '?':
-                checkNums[j] = possible_int * 2
+        # If it is, double it. If the result is greater than 10, subtract 9 from it, per Luhn's algorithm.
+        if checkNums[index_ques] >= 10:
+            checkNums[index_ques] -= 9
 
-                if checkNums[j] > 9:
-                    checkNums[j] -= 9
+    # Add up the array
+    for idx in checkNums:
+        arr_sum += idx
 
-        # Mod 10 check
-        total_sum = 0
-        for num in checkNums:
-            total_sum += num
+    if arr_sum % 10 == 0:
+        print("The missing number is: " + str(checkNums[index_ques]))
+    else:
+        while possible_num != 9:
+            # update index and re-perform the calculations
+            possible_num += 1
+            arr_sum = 0
 
-        if total_sum % 10 == 0:
-            print("The missing number is: " + str(possible_int))
-            break
-        else:
-            possible_int += 1
-    print("\n the correct number was not found")
+            checkNums[index_ques] = possible_num
+
+            # determine if the array is odd or even
+            if index_ques % 2 == 1:
+                checkNums[index_ques] *= 2
+                if checkNums[index_ques] >= 10:
+                    checkNums[index_ques] -= 9
+
+            # Add up the array again
+            for idx in checkNums:
+                arr_sum += idx
+
+            if arr_sum % 10 == 0:
+                print("The missing number is: " + str(checkNums[index_ques]))
+
+
+
+
+
+
+
+
+
+
+
 
 
 cc_nums = cc_gen()
-
+print(cc_nums)
 cc_Check(cc_nums.copy())
-print("\n")
-cc_LuhnCheck(cc_nums.copy())
+print(" ")
+print(randReplace(cc_nums.copy()))
+print(cc_LuhnCheck(randReplace(cc_nums.copy())))
