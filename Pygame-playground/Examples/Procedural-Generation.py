@@ -1,3 +1,15 @@
+#  player represented by a red rectangle. We track the player's position using the player_x and player_y variables.
+#
+# Inside the main game loop, we handle the player's movement using the arrow keys. We check for key presses using pygame.key.get_pressed() and update the player's position accordingly while ensuring they don't move outside the boundaries of the grid.
+#
+# We draw the player's rectangle on the screen using pygame.draw.rect() with a red color. The position of the rectangle is calculated based on the player's grid position and the TILE_SIZE.
+# This code sets up a grid-based world with randomly generated tiles representing different types of terrain (grass, water, sand). The screen is divided into a grid, and each cell in the grid represents a tile. We use Pygame's pygame.draw.rect() function to draw rectangles of different colors for each type of tile.
+#
+# The world is represented by a 2D list (world_grid) where each element represents the type of tile at that position. During initialization, each cell in world_grid is assigned a random tile type.
+#
+# The program continuously loops, updating the display and checking for events such as quitting the game.
+
+
 import pygame
 import random
 
