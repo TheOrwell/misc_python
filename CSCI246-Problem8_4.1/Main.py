@@ -97,8 +97,9 @@ def cc_LuhnCheck(checkNums):
 
 
 cc_nums = cc_gen()
-print(cc_nums)
+print("Original Array: \n" + str(cc_nums))
+print("\nChecked number: ")
 cc_Check(cc_nums.copy())
-print(" ")
+print("\n\nRandomly Replaced index: ")
 print(randReplace(cc_nums.copy()))
 print(cc_LuhnCheck(randReplace(cc_nums.copy())))
