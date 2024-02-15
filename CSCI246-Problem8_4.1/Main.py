@@ -1,14 +1,45 @@
 import random
 
-
+"""
+This method generates a random number, and then doubles the odd indexes,
+"""
 def cc_gen():
     numbers = list(range(10))
-    array = []
-    for i in range(1, 17):
-        randNum = random.choice(numbers)
-        array.append(randNum)
-    # print(array)
-    return array
+    isValid = False
+
+    while not isValid:
+        array = []
+        arr_sum = 0
+
+        for i in range(1, 17):
+            randNum = random.choice(numbers)
+            array.append(randNum)
+
+        #print(array)
+
+        digitCount = 0
+        index = 1  # tracking the index
+
+        for i in range(len(array)):
+            if index % 2 == 1:
+                array[i] = array[i] * 2
+                if array[i] >= 10:
+                    doubleStr = str(array[i])
+                    array[i] = int(doubleStr[0]) + int(doubleStr[1])
+                else:
+                    pass # number is not equal to or greater than 10, and does not need to be summed
+            else:
+                pass
+
+            index += 1
+
+        for num in array:
+            arr_sum += num
+
+        if arr_sum % 10 == 0:
+            print(arr_sum)
+            print(array)
+            return array
 
 
 def randReplace(arr):
@@ -97,9 +128,10 @@ def cc_LuhnCheck(checkNums):
 
 
 cc_nums = cc_gen()
-print("Original Array: \n" + str(cc_nums))
-print("\nChecked number: ")
-cc_Check(cc_nums.copy())
+
+# print("Original Array: \n" + str(cc_nums))
+# print("\nChecked number: ")
+# cc_Check(cc_nums.copy())
 print("\n\nRandomly Replaced index: ")
 print(randReplace(cc_nums.copy()))
 print(cc_LuhnCheck(randReplace(cc_nums.copy())))
