@@ -1,137 +1,71 @@
 import random
 
-"""
-This method generates a random number, and then doubles the odd indexes,
-"""
-def cc_gen():
-    numbers = list(range(10))
-    isValid = False
 
-    while not isValid:
-        array = []
-        arr_sum = 0
+def rand_card_num():
+    arr = []
+    numbers = list(range(10))  # numbers 0-9
+    for i in range(1, 17):
+        randNum = random.choice(numbers)
+        arr.append(randNum)
 
-        for i in range(1, 17):
-            randNum = random.choice(numbers)
-            array.append(randNum)
+    # Insert '?' at a random index
+    rand_index = random.randint(0, len(arr) - 1)
+    arr[rand_index] = '?'
 
-        #print(array)
-
-        digitCount = 0
-        index = 1  # tracking the index
-
-        for i in range(len(array)):
-            if index % 2 == 1:
-                array[i] = array[i] * 2
-                if array[i] >= 10:
-                    doubleStr = str(array[i])
-                    array[i] = int(doubleStr[0]) + int(doubleStr[1])
-                else:
-                    pass # number is not equal to or greater than 10, and does not need to be summed
-            else:
-                pass
-
-            index += 1
-
-        for num in array:
-            arr_sum += num
-
-        if arr_sum % 10 == 0:
-            print(arr_sum)
-            print(array)
-            return array
-
-
-def randReplace(arr):
-    index_to_replace = random.randint(0, len(arr) - 1)
-    arr[index_to_replace] = '?'
     return arr
 
 
-def cc_Check(checkNums):
-    digitCount = 0
-    index = 1  # tracking the index
+def cc_check(array):
+    index = 1   # a custom index to track whether the index of the array is even or odd.
+    arr_sum = 0     # a variable to hold the sum of the array.
+    possible_num = 0    # a variable to hold the possible number.
+    index_of_guess = array.index('?')   # an index of the possible guess.
 
-    for num in checkNums:
-        # Checks to see if the number is odd.
-        if index % 2 == 1:
-            # print(str(num), end="")
-            double = num * 2
+    # Update the array with the first possible number, which will always be 0.
+    array[index_of_guess] = possible_num
 
-            # If the result of double is equal to or exceeds 10, add the tens and the ones digit together.
+    # perform the sum doubling on the array
+    for i in range(len(array)):
+        if index % 2 == 1:  # if the array index is odd
+            double = array[i] * 2
+            array[i] = double  # update the array location
+
             if double >= 10:
-                doubleStr = str(double)  # convert the result of double into a string
-                splitSum = int(doubleStr[0]) + int(doubleStr[1])  # cast each index of that string to an integer and add them
-                print(splitSum, end="")
-                digitCount += 1
-                if digitCount % 4 == 0:
-                    print(" ", end="")
-
-            else:
-                print(double, end="")
-                digitCount += 1
-                if digitCount % 4 == 0:
-                    print(" ", end="")
-
-        # All other checks failed. The number is even.
-        else:
-            print(str(num), end="")
-            digitCount += 1
-            if digitCount % 4 == 0:
-                print(" ", end="")
-
+                double = double % 10 + double // 10
+                array[i] = double  # update the array location
         index += 1
 
+    # sum the resulting array
+    for num in array:
+        arr_sum += num
 
-def cc_LuhnCheck(checkNums):
-    possible_num = 0
-    arr_sum = 0
+    # check to see if the sum of the array, mod 10 = 0; if it does not, begin a while loop where the possible number is
+    # updated until one is found.
+    if arr_sum % 10 != 0:
+        array[index_of_guess] = possible_num
 
-    index_ques = checkNums.index('?') + 1  # +1 is here so that every other indices from 0 will be treated as odd.
+        while arr_sum % 10 != 0:
+            arr_sum = 0     # update the sum
+            possible_num += 1   # increment the sum
+            array[index_of_guess] = possible_num
 
-    checkNums[index_ques - 1] = possible_num  # assign a possible number to the unknown index. -1 here to adjust above indexing.
+            # account for if the location we are updating until we get a match is even or odd.
+            if index_of_guess % 2 == 1:
+                double = array[index_of_guess] * 2
+                array[index_of_guess] = double  # update the array location.
 
-    # determine if the array index of ? is odd or even
-    if index_ques % 2 == 1:
-        checkNums[index_ques-1] *= 2
+                if double >= 10:
+                    double = double % 10 + double // 10
+                    array[index_of_guess] = double  # update the array location.
 
-        # If it is, double it. If the result is greater than 10, subtract 9 from it, per Luhn's algorithm.
-        if checkNums[index_ques-1] >= 10:
-            checkNums[index_ques-1] -= 9
-
-    # Add up the array
-    for idx in checkNums:
-        arr_sum += idx
-
-    if arr_sum % 10 == 0:
-        print("The missing number is: " + str(checkNums[index_ques]))
-    else:
-        while possible_num != 9:
-            # update index and re-perform the calculations
-            possible_num += 1
-            arr_sum = 0
-
-            checkNums[index_ques-1] = possible_num
-
-            # determine if the array is odd or even
-            if index_ques % 2 == 1:
-                checkNums[index_ques-1] *= 2
-                if checkNums[index_ques-1] >= 10:
-                    checkNums[index_ques-1] -= 9
-
-            # Add up the array again
-            for idx in checkNums:
-                arr_sum += idx
-
-            if arr_sum % 10 == 0:
-                print("The missing number is: " + str(checkNums[index_ques-1]))
+            # add everything in the array up again, after this, the check in the while loop will perform the
+            # next mod 10 check.
+            for num in array:
+                arr_sum += num
+    print("The missing number is: " + str(possible_num))
+    return arr_sum % 10 == 0
 
 
-cc_nums = cc_gen()
-
-# print("Original Array: \n" + str(cc_nums))
-# print("\nChecked number: ")
-# cc_Check(cc_nums.copy())
-print("\n\nRandomly Replaced index: ")
-print(randReplace(cc_nums.copy()))
-print(cc_LuhnCheck(randReplace(cc_nums.copy())))
+credit_card_num = rand_card_num()
+print("The credit card number: \n" + str(credit_card_num))
+cc_check(credit_card_num.copy())
