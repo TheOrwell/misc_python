@@ -1,6 +1,7 @@
 import random
 
 
+# a method for generating a random credit card number with a '?' in it.
 def rand_card_num():
     arr = []
     numbers = list(range(10))  # numbers 0-9
@@ -16,10 +17,10 @@ def rand_card_num():
 
 
 def cc_check(array):
-    index = 1   # a custom index to track whether the index of the array is even or odd.
-    arr_sum = 0     # a variable to hold the sum of the array.
-    possible_num = 0    # a variable to hold the possible number.
-    index_of_guess = array.index('?')   # an index of the possible guess.
+    index = 1  # a custom index to track whether the index of the array is even or odd.
+    arr_sum = 0  # a variable to hold the sum of the array.
+    possible_num = 0  # a variable to hold the possible number.
+    index_of_guess = array.index('?')  # an index of the possible guess.
 
     # Update the array with the first possible number, which will always be 0.
     array[index_of_guess] = possible_num
@@ -45,12 +46,12 @@ def cc_check(array):
         array[index_of_guess] = possible_num
 
         while arr_sum % 10 != 0:
-            arr_sum = 0     # update the sum
-            possible_num += 1   # increment the sum
+            arr_sum = 0  # update the sum
+            possible_num += 1  # increment the sum
             array[index_of_guess] = possible_num
 
             # account for if the location we are updating until we get a match is even or odd.
-            if index_of_guess % 2 == 1:
+            if index_of_guess - 1 % 2 == 1:    # -1 to ensure the mod check is being performed with an even/odd in mind.
                 double = array[index_of_guess] * 2
                 array[index_of_guess] = double  # update the array location.
 
@@ -63,9 +64,11 @@ def cc_check(array):
             for num in array:
                 arr_sum += num
     print("The missing number is: " + str(possible_num))
-    return arr_sum % 10 == 0
+    return arr_sum % 10 != 1
 
 
-credit_card_num = rand_card_num()
-print("The credit card number: \n" + str(credit_card_num))
-cc_check(credit_card_num.copy())
+credit_card_num = rand_card_num()   # save an array of 16 randomly generated numbers to a var.
+
+# use .copy throughout to ensure that the same array is being used.
+print("The credit card number: \n" + str(credit_card_num.copy()))   # print the array for readibility
+cc_check(credit_card_num.copy())    # perform the check
