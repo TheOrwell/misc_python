@@ -46,8 +46,8 @@ def playerMove():
 
 # --------------------- Enemy ---------------------
 enemy_frames = [
-    pygame.image.load("Goblin.png").convert_alpha(),
-    pygame.image.load("Goblin2.png").convert_alpha(),
+    pygame.image.load("Images/Goblin.png").convert_alpha(),
+    pygame.image.load("Images/Goblin2.png").convert_alpha(),
 ]
 
 # Set up animation variables
@@ -62,7 +62,7 @@ for i in range(len(enemy_frames)):
     height = int(enemy_frames[i].get_height() * scale_factor)
     enemy_frames[i] = pygame.transform.scale(enemy_frames[i], (width, height))
 
-enemy_image = pygame.image.load("Goblin.png").convert_alpha()
+enemy_image = pygame.image.load("Images/Goblin.png").convert_alpha()
 enemy_image = pygame.transform.scale(enemy_image, (64, 64))
 
 # A variable that helps us know where the enemy is on the screen, and track it.
