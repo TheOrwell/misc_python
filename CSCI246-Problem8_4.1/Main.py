@@ -64,7 +64,7 @@ def cc_check(array):
             for num in array:
                 arr_sum += num
     print("The missing number is: " + str(possible_num))
-    return arr_sum % 10 != 1
+    return arr_sum % 10 == 1
 
 
 credit_card_num = rand_card_num()   # save an array of 16 randomly generated numbers to a var.
