@@ -17,12 +17,12 @@ font = pygame.font.SysFont(None, FONT_SIZE)
 
 # Set up the dice
 dice_images = [
-    pygame.image.load("dice1.png"),
-    pygame.image.load("dice2.png"),
-    pygame.image.load("dice3.png"),
-    pygame.image.load("dice4.png"),
-    pygame.image.load("dice5.png"),
-    pygame.image.load("dice6.png")
+    pygame.image.load("Dice1.png"),
+    pygame.image.load("Dice2.png"),
+    pygame.image.load("Dice3.png"),
+    pygame.image.load("Dice4.png"),
+    pygame.image.load("Dice5.png"),
+    pygame.image.load("Dice6.png")
 ]
 
 # Set up the screen
