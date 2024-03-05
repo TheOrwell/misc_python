@@ -1,0 +1,1 @@
+del /s /q C:\$Recycle.Bin\*

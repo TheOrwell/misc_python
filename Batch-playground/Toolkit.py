@@ -1,26 +1,26 @@
 import tkinter as tk
-from tkinter import messagebox
 import subprocess
 
-# Function to be called when the first button is clicked
-def greet():
-    messagebox.showinfo("Message", "Hello, World!")
 
 def openLink():
     try:
         subprocess.Popen("openLinks.bat", shell=True)
     except FileNotFoundError:
-        print("Batch file not found!")
+        print("Batch file not found. Did it get moved or renamed?")
 
 
 # Function to be called when the second button is clicked
-def farewell():
-    messagebox.showinfo("Message", "Goodbye!")
+def cleanRecycleBin():
+    try:
+        subprocess.Popen("cleanRecycleBin.bat")
+    except FileNotFoundError:
+        print("Batch file not found. Did it get moved or renamed?")
+
 
 # Create main application window
 root = tk.Tk()
 root.title("Popup Window Example")
-root.geometry("400x300")  # Set the size of the root window (width x height)
+root.geometry("1000x200")  # Set the size of the root window (width x height)
 
 # Create a frame to hold the buttons
 frame = tk.Frame(root)
@@ -38,25 +38,26 @@ space it takes up.
 button1 = tk.Button(frame, text="M172 - Resources", command=openLink)
 button1.pack(side=tk.LEFT, padx=5)
 
-
 """
 button1.pack(): This method is used to pack and display the button widget within its parent container, which in this
 case is the frame. It defines how the button should be placed inside the frame. Like frame.pack(), button1.pack() also 
 accepts parameters to customize its placement and appearance, such as side, padx, pady, etc.
 """
-button2 = tk.Button(frame, text="Say Goodbye", command=farewell)
-frame.pack(side=tk.BOTTOM, padx=5)
+button2 = tk.Button(frame, text="Clean Recycle Bin", command=cleanRecycleBin)
+button2.pack(side=tk.BOTTOM, padx=5)
+
 
 # Function to create a custom-sized popup window
 def custom_popup():
     popup = tk.Toplevel(root)
     popup.title("Custom Popup")
-    popup.geometry("300x200")  # Set the size of the popup window
-    label = tk.Label(popup, text="This is a custom-sized popup window.")
+    popup.geometry("500x400")  # Set the size of the popup window
+    label = tk.Label(popup, text="[Add about details here]")
     label.pack(padx=10, pady=10)
 
+
 # Create a button to trigger the custom-sized popup window
-custom_button = tk.Button(root, text="Custom Popup", command=custom_popup)
+custom_button = tk.Button(root, text="About", command=custom_popup)
 custom_button.pack(pady=10)
 
 # Run the Tkinter event loop
