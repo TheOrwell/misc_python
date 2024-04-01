@@ -1,1 +1,1 @@
-Based on the outputs and the function's time calculations, using a recursive strategy to compute the numbers in the Fibonacci sequence is the faster option.
+Based on the outputs and the function's time calculations, using a recursive strategy to compute the numbers in the Fibonacci sequence is the faster option, since the time calculations for a recursive run are around 3ms (on my machine) for 950 Fibonacci numbers, vs 8ms using a loop. (I think these numbers my vary though, since my computer seems to be SUPER fast...)
