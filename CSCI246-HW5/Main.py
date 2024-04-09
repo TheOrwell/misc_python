@@ -1,6 +1,7 @@
 """
-CITATION: Consulted Claude from Antrhopic during the solving of this problem; mostly to ensure the functions
-    were created correctly and that the test cases were good.
+CITATION: Consulted Claude from Antrhopic during the solving of this problem. Along with this, the textbook:
+    "Connecting Discrete Mathematics and Computer Science" by "David Liben-Nowell" was also consulted, for some good
+    test cases of the "extEuclid" and "inverse" methods.
 """
 
 
@@ -12,17 +13,22 @@ def inverse(a, n):
         return f"No inverse for a exists in ℤ_{n}"
 
 
-def extEuclid(a, b):
-    if b == 0:
-        return 1, 0, a
+def extEuclid(n, m):
+    if m % n == 0:
+        return 1, 0, n
     else:
-        x, y, r = extEuclid(b, a % b)
-        x, y = y, x - (a // b) * y
-        return x, y, r
+        x, y, r = extEuclid(m % n, n)
+        return (y - (m // n) * x), x, r
 
 
-print("Test Case Results: \n")
-print(inverse(3, 11))   # When 'a' has an inverse modulo 'n:'
-print(inverse(4, 6))    # When 'a' does not have a 'n' inverse.
-print(inverse(5, 8))    # When 'a' and 'n' are "coprime."
-print(inverse(2, 7))     # When 'n' is a prime number.
+print("Extended-Euclid computations from book:")
+print(extEuclid(12, 18))
+print(extEuclid(18, 30))
+
+print("\nMultiplicative Inverse computations from book:")
+print(inverse(2, 9))
+print(inverse(7, 11))
+print(inverse(3, 9))
+
+print("\nMultiplicative Inverse computations for Exercise 7.91:")
+print(inverse(7, 15))
