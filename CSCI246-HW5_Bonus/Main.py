@@ -1,3 +1,11 @@
+"""
+CITATION: Consulted Dr Mumey on the best strategy for solving this problem, wherein he told me that all I had to do was to
+    I should tie all of our previously used homework methods together and follow the pseudocode from chapter 7 of the
+    textbook. Claude from Anthropic to aid in tying the methods together properly and ensure everything was working.
+    Outputs from the below code match the textbook examples.
+"""
+
+
 def GenerateKeys(p, q):
     # Choosing 2 large primes p and q in method call below
     # Define n == pq
@@ -12,7 +20,7 @@ def GenerateKeys(p, q):
         if gcd == 1:
             relPrime = True
         else:
-            e += 1
+            e += 1 # Advance e until a suitable relatively prime result is detected.
 
     # Compute inverse of e % (p-1)(q-1) and make it equal to d.
     d = inverse(e, (p - 1) * (q - 1))
@@ -31,7 +39,7 @@ def Decrypt(E, d, n):
     return pow(E, d, n)
 
 
-# inverse function from previous homeworks
+# inverse function from previous homeworks and textbook pseudocode.
 def inverse(a, n):
     x, y, d = extEuclid(a, n)
     if d == 1:
@@ -40,7 +48,7 @@ def inverse(a, n):
         return f"No inverse for a exists in ℤ_{n}"
 
 
-# extEuclid function from previous homeworks
+# extEuclid function from previous homeworks and textbook pseudocode.
 def extEuclid(n, m):
     if m % n == 0:
         return 1, 0, n
@@ -49,6 +57,7 @@ def extEuclid(n, m):
         return (y - (m // n) * x), x, r
 
 
+# Euclid function from previous homeworks and textbook pseudocode.
 def euclid(n, m):
     if m % n == 0:
         return n
@@ -61,7 +70,7 @@ def euclid(n, m):
 p, q = 13, 17
 public_key, private_key = GenerateKeys(p, q)
 print(f"Public key: {public_key}")
-print(f"Private key: {private_key}")
+print(f"Secret key: {private_key}")
 
 # Encrypt message
 m = 202
